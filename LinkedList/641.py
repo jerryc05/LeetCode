@@ -1,0 +1,92 @@
+class MyCircularDeque:
+    def __init__(self, k: int):
+        self.i = 0
+        self.size = 0
+        self.capacity = k
+        self.l = [-1 for _ in range(self.capacity)]
+
+    def insertFront(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.dec()
+        self.l[self.i] = value
+        self.size += 1
+        return True
+
+    def insertLast(self, value: int) -> bool:
+        if self.isFull():
+            return False
+        self.l[(self.i + self.size) % self.capacity] = value
+        self.size += 1
+        return True
+
+    def deleteFront(self) -> bool:
+        if self.size >= 1:
+            self.inc()
+            self.size -= 1
+            return True
+        return False
+
+    def deleteLast(self) -> bool:
+        if self.size >= 1:
+            self.size -= 1
+            return True
+        return False
+
+    def getFront(self) -> int:
+        return self.l[self.i] if self.size else -1
+
+    def getRear(self) -> int:
+        return self.l[(self.i + self.size - 1) % self.capacity] if self.size else -1
+
+    def isEmpty(self) -> bool:
+        return self.size == 0
+
+    def isFull(self) -> bool:
+        return self.size == self.capacity
+
+    def dec(self):
+        self.i = (self.i + self.capacity - 1) % self.capacity
+
+    def inc(self):
+        self.i = (self.i + 1) % self.capacity
+
+    # def __str__(self) -> str:
+    #     m = '['
+    #     n = ' '
+    #     for i, x in enumerate(self.l):
+    #         m += ',' + str(x)
+    #         n += ' ' * (len(str(x)) + 1)
+    #         if self.i == i:
+    #             n = n[:-1] + '^'
+    #     return f'{m}]\n{n}'
+
+
+myCircularDeque = MyCircularDeque(3)
+print(str(myCircularDeque))
+assert myCircularDeque.insertLast(1)
+print(str(myCircularDeque))
+assert myCircularDeque.insertLast(2)
+print(str(myCircularDeque))
+assert myCircularDeque.insertFront(3)
+print(str(myCircularDeque))
+assert not myCircularDeque.insertFront(4)
+print(str(myCircularDeque))
+assert myCircularDeque.getRear() == 2
+print(str(myCircularDeque))
+assert myCircularDeque.isFull()
+assert myCircularDeque.deleteLast()
+assert myCircularDeque.insertFront(4)
+assert myCircularDeque.getFront() == 4
+print('ok')
+
+'''
+
+["MyCircularDeque","insertFront","deleteLast","getRear","getFront","getFront","deleteFront","insertFront","insertLast","insertFront","getFront","insertFront"]
+[[4],[9],[],[],[],[],[],[6],[5],[9],[],[6]]
+
+["MyCircularDeque","insertFront","getFront","getRear","getRear","insertFront","getRear","isEmpty","isEmpty","deleteFront","insertLast","deleteFront","getFront","insertLast","deleteLast","insertLast","getRear","getRear","getFront","insertFront","getRear","getRear","insertLast","insertLast","insertFront","insertLast","getRear","getRear","insertFront","deleteFront","getFront","getFront","deleteLast","isFull","getRear","insertLast","insertFront","insertFront","getRear","getFront","getRear","getRear","insertLast","deleteLast","getFront","insertLast","getRear","getFront","deleteFront","isFull","getRear","deleteFront","getRear","insertLast","getFront","getFront","getFront","insertLast","getFront","isFull","insertFront","insertFront","insertFront","insertFront","getFront","insertLast","getFront","insertFront","deleteFront","insertFront","getRear","insertFront","insertLast","getFront","getRear","getRear","isEmpty","deleteLast","insertFront","deleteLast","getFront","getRear","insertFront","deleteLast","getFront","getFront","getRear","getRear","deleteLast","insertFront","getFront","insertLast","getRear","insertFront","deleteFront","getRear","insertLast","insertLast","getFront","getFront","insertLast","deleteFront","deleteLast","insertLast","insertLast","deleteFront","insertFront","getFront","insertFront","insertFront","deleteLast","insertLast","insertLast","getFront","getFront","getFront","deleteFront","getRear","getRear","insertLast","getRear","deleteFront","getFront","insertFront","getFront","getRear","deleteFront","insertLast","isEmpty","getFront","deleteLast","getFront","isEmpty","getRear","insertFront","insertFront","deleteLast","getFront","insertLast","insertFront","getRear","insertFront","getRear","getRear","insertLast","insertFront","deleteFront","getRear","deleteFront","insertFront","deleteFront","isFull","getFront","deleteFront","deleteFront","getFront","insertLast","deleteFront","getFront","getFront","deleteLast","getFront","insertFront","getFront","getFront","getFront","getFront","insertFront","insertLast","getFront","insertFront","getRear","insertLast","deleteFront","insertLast","getRear","insertLast","insertFront","deleteLast","getRear","getFront","insertLast","isFull","insertLast","getFront","isEmpty","getRear","insertLast","getRear","insertLast","insertFront","deleteLast","deleteLast","insertLast","insertLast","getFront","deleteLast","getFront","deleteLast","getFront","getFront","getRear","insertFront","deleteFront","getRear","insertFront","insertLast","insertLast","insertLast","deleteLast","insertLast","getFront","deleteFront","getRear","insertFront","deleteFront","deleteLast","getFront","insertLast","isEmpty","insertLast","deleteLast","getFront","insertFront","isFull","deleteFront","getRear","deleteLast","getRear","isEmpty","insertLast","insertFront","isFull","insertFront","deleteLast","insertLast","getFront","deleteFront","insertFront","insertFront","getFront","getRear","insertLast","deleteLast","insertFront","getFront","getRear","insertLast","insertFront","getFront","deleteLast","deleteFront","getRear","insertLast","insertLast","insertFront","insertLast","deleteFront","insertFront","deleteFront","isEmpty","getRear","isFull","getFront","deleteFront","getRear","getRear","getRear","getFront","getRear","getRear","deleteFront","deleteFront","deleteFront","getFront","getFront","getFront","isFull","deleteLast","insertLast","getRear","getFront","getRear","isFull","insertLast","deleteLast","getFront","insertLast","insertLast","getFront","getFront","insertFront","deleteLast","isFull","getFront","insertLast","getFront","getRear","getRear","deleteFront","insertFront","getRear","deleteFront","isEmpty","deleteFront","getFront","getFront","deleteFront","getFront","insertLast","getRear","getFront","deleteFront","insertLast","getRear","isEmpty","deleteFront","deleteFront","insertFront","deleteLast","isFull","getRear","getRear","insertLast","deleteLast","insertLast","isFull","getFront","insertLast","getFront","insertLast","insertFront","deleteLast","getFront","getFront","getRear","insertFront","getRear","getFront","deleteLast","getRear","insertLast","insertLast","insertLast","insertLast","getRear","insertLast","getRear","deleteLast","deleteFront","getFront","deleteFront","getFront","insertLast","isEmpty","insertLast","insertFront","insertLast","deleteFront","insertLast","getRear","insertFront","insertLast","getRear","getRear","getRear","getRear","insertFront","insertLast","insertFront","deleteFront","getFront","insertLast","insertLast","deleteLast","getRear","getRear","getFront","getFront","deleteFront","getFront","getRear","insertLast","isFull","getRear","insertFront","deleteFront","getRear","deleteLast","getFront","getFront","insertFront","insertLast","getRear","insertFront","isFull","getFront","insertFront","isFull","deleteLast","insertLast","insertFront","getRear","deleteFront","insertFront","insertLast","getRear","insertFront","deleteLast","deleteFront","deleteFront","insertFront","deleteFront","getRear","deleteFront","getRear","getFront","getRear","getFront","getFront","getFront","getRear","getFront","insertFront","deleteFront","deleteFront","insertFront","insertLast","insertFront","getRear","insertLast","getFront","getRear","getFront","getFront","insertFront","insertFront","insertLast","deleteLast","insertFront","getFront","insertFront","insertLast","getRear","deleteLast","insertFront","isFull","insertLast","insertLast","getRear","getRear","getRear","getFront","deleteLast","insertLast","isFull","getRear","getFront","getFront","getFront","insertFront","insertLast","getFront","insertFront","getFront","insertLast","getFront","insertLast","insertLast","insertFront","getFront","insertLast","insertFront","getFront","deleteLast","getFront","deleteFront","getFront","insertLast","isFull","getRear","deleteLast","deleteFront","getRear","insertFront","getFront","getFront","getRear","insertLast","getFront","getFront","insertLast","getFront","isEmpty","insertLast","getFront","getFront","isEmpty","insertFront","getFront","insertLast","insertFront","getRear","getFront","deleteLast","insertFront","getRear","getFront","insertFront","isFull","insertFront","insertLast","insertFront","isFull","insertLast","insertLast","deleteFront","insertLast","getFront","insertFront","insertFront","getFront","insertLast","insertLast","insertLast","deleteFront","insertLast","getRear","isEmpty","insertLast","getRear","deleteFront","insertFront","insertFront","getFront","getRear","getFront","insertFront","getRear","getFront","getRear","insertFront","getRear","isFull","getFront","insertFront","insertLast","getFront","getFront","getFront","getRear","deleteLast","getRear","getFront","isFull","isEmpty","insertLast","getRear","isFull","getRear","deleteLast","insertLast","insertFront","getFront","getRear","isFull","insertFront","insertLast","insertFront","getRear","insertFront","insertFront","deleteLast","getRear","getRear","getFront","getFront","getFront","getRear","getFront","deleteLast","insertLast","insertLast","getFront","insertLast","insertFront","insertLast","getFront","getRear","insertFront","deleteLast","insertFront","insertFront","insertLast","insertLast","isFull","getFront","isEmpty","insertLast","getFront","getRear","insertFront","insertLast","insertFront","insertLast","deleteLast","deleteFront","deleteFront","deleteLast","insertLast","getFront","getFront","isEmpty","insertLast","isEmpty","getFront","getFront","isFull","insertFront","insertFront","insertLast","getFront","insertLast","getRear","deleteLast","getFront","insertLast","deleteLast","insertFront","getFront","deleteLast","getFront","getRear","isFull","getRear","getFront","getFront","insertLast","insertFront","insertFront","insertLast","isEmpty","deleteLast","insertLast","getRear","deleteLast","isFull","getRear","deleteFront","isFull","isEmpty","deleteLast","getRear","insertFront","deleteFront","isEmpty","insertFront","insertLast","getRear","getRear","deleteFront","insertLast","insertFront","insertFront","isEmpty","getFront","isEmpty","getRear","isEmpty","insertFront","insertFront","insertFront","insertFront","isFull","insertFront","deleteFront","getRear","deleteFront","insertLast","insertFront","insertLast","isFull","insertFront","insertLast","insertLast","insertLast","insertFront","getFront","insertFront","insertLast","insertFront","getRear","insertLast","insertLast","deleteLast","isEmpty","getFront","deleteFront","deleteFront","insertLast","getFront","insertFront","getRear","getRear","deleteFront","getFront","getRear","insertLast","getFront","insertFront","getRear","getFront","isEmpty","getFront","isFull","insertFront","deleteLast","insertFront","insertLast","getRear","deleteLast","insertLast","getRear","getRear","insertFront","deleteLast","getRear","insertLast","insertFront","insertFront","isFull","getFront","insertFront","getRear","getFront","getRear","getFront","deleteLast","insertLast","getFront","insertFront","insertFront","insertFront","getFront","deleteLast","insertFront","insertFront","getRear","getFront","insertLast","deleteFront","insertFront","getFront","isFull","getRear","getRear","getRear","getFront","getRear","insertLast","getRear","insertFront","insertFront","insertLast","getRear","insertFront","deleteFront","insertFront","getFront","getFront","insertFront","getRear","deleteFront","isEmpty","insertLast","insertLast","getRear","getRear","insertFront","getFront","isEmpty","isFull","getFront","getRear","insertLast","getRear","getFront","insertLast","getFront","getRear","insertFront","getFront","insertFront","insertFront","insertLast","insertFront","deleteLast","getRear","getRear","isEmpty","isFull","isEmpty","insertFront","getFront","insertFront","getRear","insertLast","deleteFront","getRear","insertLast","insertFront","insertFront","insertLast","insertFront","insertFront","isEmpty","getRear","deleteFront","getFront","getRear","getFront","getRear","insertLast","isEmpty","isEmpty","insertFront","deleteLast","insertLast","getRear","getRear","insertFront","getFront","getRear","deleteLast","getFront","insertFront","getFront","deleteLast","getFront","getFront","deleteLast","isFull","insertLast","getRear","insertFront","deleteFront","getRear","deleteLast","isFull","deleteFront","getFront","getRear","getRear","insertFront","deleteFront","insertLast","insertFront","getFront","getRear","isEmpty","insertLast","insertLast","getFront","getFront","getFront","insertLast","getFront","getFront","insertFront","getFront","insertFront","getRear","insertLast","insertFront","getFront","getRear","isFull","insertFront","getFront","insertLast","getRear","getFront","getRear","isEmpty","getFront","insertFront","insertLast","insertLast","insertFront","insertLast","insertLast","insertFront","getRear","getRear","insertFront","getRear","getRear","getFront","deleteLast","insertFront","getFront","getRear","insertLast","getRear","insertFront","getFront","deleteLast","getFront","getRear","getRear","getRear","getRear","insertLast","insertLast","getRear","insertLast","getFront","getFront","insertFront","getFront","getRear","getRear","insertFront","insertLast","insertFront","getFront","getRear","insertFront","getRear","insertFront","insertLast","insertLast","getRear","getRear","getFront","insertLast","getRear","isFull","deleteFront","getRear","getFront","insertFront","insertFront","getFront","getRear","getRear","getFront","insertLast","insertFront","deleteFront","insertLast","insertFront","insertLast","getFront","insertFront","getFront","getFront","getFront","getRear","getFront","insertLast","insertFront","getFront","getRear","getRear","insertLast","getRear","getFront","insertLast","insertLast","getRear","getFront","getFront","isEmpty","getFront","getRear","insertLast","getRear","getFront","getFront","getRear","insertLast","isFull","deleteFront","getFront","isFull","getRear","deleteFront","deleteLast","getRear","getRear","getRear","insertLast","insertLast","deleteFront","deleteLast","getFront","insertFront","insertLast","deleteFront","getFront","isFull"]
+[[731],[344],[],[],[],[433],[],[],[],[],[504],[],[],[317],[],[608],[],[],[],[699],[],[],[998],[267],[159],[834],[],[],[340],[],[],[],[],[],[],[288],[702],[192],[],[],[],[],[937],[],[],[522],[],[],[],[],[],[],[],[296],[],[],[],[777],[],[],[143],[120],[429],[864],[],[596],[],[314],[],[0],[],[305],[359],[],[],[],[],[],[31],[],[],[],[878],[],[],[],[],[],[],[361],[],[748],[],[234],[],[],[347],[227],[],[],[368],[],[],[938],[773],[],[882],[],[669],[399],[],[62],[285],[],[],[],[],[],[],[214],[],[],[],[631],[],[],[],[451],[],[],[],[],[],[],[81],[498],[],[],[195],[581],[],[870],[],[],[644],[948],[],[],[],[278],[],[],[],[],[],[],[405],[],[],[],[],[],[555],[],[],[],[],[744],[881],[],[807],[],[786],[],[173],[],[361],[493],[],[],[],[406],[],[841],[],[],[],[894],[],[290],[971],[],[],[800],[660],[],[],[],[],[],[],[],[959],[],[],[137],[755],[971],[70],[],[754],[],[],[],[375],[],[],[],[468],[],[109],[],[],[760],[],[],[],[],[],[],[66],[336],[],[393],[],[531],[],[],[613],[231],[],[],[944],[],[761],[],[],[21],[756],[],[],[],[],[950],[114],[91],[775],[],[149],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[988],[],[],[],[],[381],[],[],[517],[842],[],[],[506],[],[],[],[659],[],[],[],[],[651],[],[],[],[],[],[],[],[],[546],[],[],[],[366],[],[],[],[],[607],[],[],[],[],[459],[],[955],[],[],[190],[],[658],[128],[],[],[],[],[74],[],[],[],[],[765],[165],[885],[388],[],[764],[],[],[],[],[],[],[833],[],[950],[508],[701],[],[963],[],[974],[669],[],[],[],[],[4],[555],[404],[],[],[803],[996],[],[],[],[],[],[],[],[],[689],[],[],[684],[],[],[],[],[],[125],[407],[],[230],[],[],[315],[],[],[934],[537],[],[],[910],[222],[],[34],[],[],[],[923],[],[],[],[],[],[],[],[],[],[],[],[761],[],[],[820],[620],[96],[],[415],[],[],[],[],[493],[250],[802],[],[318],[],[243],[402],[],[],[894],[],[930],[655],[],[],[],[],[],[356],[],[],[],[],[],[439],[459],[],[279],[],[639],[],[656],[202],[98],[],[142],[108],[],[],[],[],[],[47],[],[],[],[],[],[497],[],[],[],[176],[],[],[298],[],[],[845],[],[],[],[182],[],[960],[859],[],[],[],[503],[],[],[401],[],[184],[866],[348],[],[204],[44],[],[900],[],[176],[998],[],[909],[571],[489],[],[639],[],[],[169],[],[],[105],[985],[],[],[],[597],[],[],[],[237],[],[],[],[596],[793],[],[],[],[],[],[],[],[],[],[779],[],[],[],[],[926],[764],[],[],[],[324],[43],[496],[],[939],[259],[],[],[],[],[],[],[],[],[],[364],[190],[],[426],[751],[505],[],[],[157],[],[760],[4],[143],[189],[],[],[],[980],[],[],[726],[536],[203],[975],[],[],[],[],[169],[],[],[],[541],[],[],[],[],[240],[449],[308],[],[88],[],[],[],[667],[],[594],[],[],[],[],[],[],[],[],[814],[591],[321],[396],[],[],[931],[],[],[],[],[],[],[],[],[],[377],[],[],[241],[117],[],[],[],[53],[158],[508],[],[],[],[],[],[747],[64],[386],[304],[],[347],[],[],[],[770],[506],[80],[],[123],[148],[647],[165],[164],[],[325],[219],[371],[],[683],[289],[],[],[],[],[],[909],[],[859],[],[],[],[],[],[118],[],[875],[],[],[],[],[],[977],[],[428],[168],[],[],[62],[],[],[676],[],[],[112],[171],[41],[],[],[383],[],[],[],[],[],[882],[],[809],[352],[612],[],[],[787],[81],[],[],[615],[],[256],[],[],[],[],[],[],[],[701],[],[8],[975],[779],[],[667],[],[955],[],[],[724],[],[],[],[956],[521],[],[],[568],[],[],[],[],[],[526],[],[],[729],[],[],[478],[],[625],[450],[361],[399],[],[],[],[],[],[],[510],[],[987],[],[797],[],[],[977],[559],[580],[863],[971],[567],[],[],[],[],[],[],[],[647],[],[],[177],[],[844],[],[],[466],[],[],[],[],[754],[],[],[],[],[],[],[320],[],[179],[],[],[],[],[],[],[],[],[938],[],[363],[345],[],[],[],[74],[518],[],[],[],[174],[],[],[276],[],[73],[],[776],[94],[],[],[],[881],[],[174],[],[],[],[],[],[676],[605],[503],[868],[673],[279],[932],[],[],[581],[],[],[],[],[778],[],[],[363],[],[654],[],[],[],[],[],[],[],[993],[466],[],[870],[],[],[616],[],[],[],[505],[857],[617],[],[],[994],[],[494],[907],[661],[],[],[],[20],[],[],[],[],[],[622],[889],[],[],[],[],[325],[160],[],[185],[663],[492],[],[870],[],[],[],[],[],[131],[616],[],[],[],[711],[],[],[81],[666],[],[],[],[],[],[],[180],[],[],[],[],[374],[],[],[],[],[],[],[],[],[],[],[477],[426],[],[],[],[792],[911],[],[],[]]
+
+
+'''
