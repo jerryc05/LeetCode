@@ -1,20 +1,6 @@
 from listnode import *
 
 
-class TreeNode:
-    def __init__(
-        self, val: int = 0, left: 'TreeNode|None' = None, right: 'TreeNode|None' = None
-    ):
-        self.val = val
-        self.left = left
-        self.right = right
-
-    def __repr__(self):
-        if self.left is None and self.right is None:
-            return str(self.val)
-        return f'({self.val},{repr(self.left)},{repr(self.right)})'
-
-
 def f(l: list[int]) -> Optional[TreeNode]:
     if not l:
         return None
