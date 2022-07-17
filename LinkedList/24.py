@@ -1,4 +1,5 @@
-from listnode import * 
+from listnode import *
+
 
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -13,7 +14,6 @@ class Solution:
 
 
 print(Solution().swapPairs(ListNode(1, ListNode(2, ListNode(3, ListNode(4))))))
-
 
 
 print(Solution().swapPairs(ListNode(1)))

@@ -1,4 +1,5 @@
-from listnode import * 
+from listnode import *
+
 
 class ListNode2(ListNode):
     def __init__(self, n):
