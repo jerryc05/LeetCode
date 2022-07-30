@@ -14,15 +14,15 @@ class Solution:
 
         def cmp(l: str, r: str):
             l_freq, r_freq = item_info[l].freq, item_info[r].freq
-            return l_freq < r_freq or (l_freq == r_freq and l < r)
+            return l_freq < r_freq or (l_freq == r_freq and l > r)
 
-        # def fixup(i: int):
-        #     parent_i = (i - 1) // 2
-        #     while i > 0 and cmp(min_heap[i], min_heap[parent_i]):
-        #         item_info[min_heap[i]].idx, item_info[min_heap[parent_i]].idx = parent_i, i
-        #         min_heap[i], min_heap[parent_i] = min_heap[parent_i], min_heap[i]
-        #         i = parent_i
-        #         parent_i = (i - 1) // 2
+        def fixup(i: int):
+            parent_i = (i - 1) // 2
+            while i > 0 and cmp(min_heap[i], min_heap[parent_i]):
+                item_info[min_heap[i]].idx, item_info[min_heap[parent_i]].idx = parent_i, i
+                min_heap[i], min_heap[parent_i] = min_heap[parent_i], min_heap[i]
+                i = parent_i
+                parent_i = (i - 1) // 2
 
         def fixdown(i: int):
             while ...:
@@ -46,7 +46,7 @@ class Solution:
                 if len(min_heap) < k:
                     item_info[word].idx = len(min_heap)
                     min_heap.append(word)
-                    fixdown(len(min_heap) - 1)
+                    fixup(len(min_heap) - 1)
                 else:
                     try_insert = True
             else:
@@ -56,15 +56,15 @@ class Solution:
                 else:
                     try_insert = True
             if try_insert:
-                if cmp(word, min_heap[0]):
+                if not cmp(word, min_heap[0]):
                     item_info[min_heap[0]].idx = -1
                     min_heap[0] = word
                     item_info[min_heap[0]].idx = 0
                     fixdown(0)
 
         sorted_arr: list[str] = [''] * len(min_heap)
-        for i in range(len(sorted_arr)):
-            i = len(sorted_arr) - 1 - i
+        for j in range(len(sorted_arr)):
+            i = len(sorted_arr) - 1 - j
             sorted_arr[i] = min_heap[0]
             min_heap[0] = min_heap[-1]
             del min_heap[-1]
@@ -84,7 +84,7 @@ def test_2():
         ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], 4
     ) == ["the", "is", "sunny", "day"]
 
-
+test_2()
 def test_3():
     assert Solution().topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 3) == [
         "i",
