@@ -33,7 +33,8 @@ class Solution:
                 if r < len(min_heap) and cmp(min_heap[r], min_heap[l]):
                     l = r
                 # now [l] is the "smaller" child
-                if not cmp(min_heap[i], min_heap[l]):
+                if cmp(min_heap[l], min_heap[i]):
+                    item_info[min_heap[i]].idx, item_info[min_heap[l]].idx = l, i
                     min_heap[i], min_heap[l] = min_heap[l], min_heap[i]
                     i = l
                 else:
@@ -84,7 +85,6 @@ def test_2():
         ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], 4
     ) == ["the", "is", "sunny", "day"]
 
-test_2()
 def test_3():
     assert Solution().topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 3) == [
         "i",
