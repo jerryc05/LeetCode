@@ -11,13 +11,12 @@ class Solution:
     def topKFrequent(self, nums: list[int], k: int):
         item_info: 'dict[int,ItemInfo]' = {}
         heap: 'list[int]' = []
-        smallest_size = (k + 1) // 2
 
         def cmp(l: int, r: int):
             l_freq, r_freq = item_info[l].freq, item_info[r].freq
-            return l_freq > r_freq or (l_freq == r_freq and l < r)
+            return l_freq < r_freq or (l_freq == r_freq and l > r)
 
-        def fixup(heap: 'list[int]', i: int):
+        def fixup(i: int):
             parent_i = (i - 1) // 2
             while i > 0 and cmp(heap[i], heap[parent_i]):
                 item_info[heap[i]].idx, item_info[heap[parent_i]].idx = parent_i, i
@@ -25,35 +24,7 @@ class Solution:
                 i = parent_i
                 parent_i = (i - 1) // 2
 
-        for num in nums:
-            try_insert = False
-            if num not in item_info:
-                item_info[num] = ItemInfo(1)
-                if len(heap) < k:
-                    item_info[num].idx = len(heap)
-                    heap.append(num)
-                    fixup(heap, len(heap) - 1)
-                else:
-                    try_insert = True
-            else:
-                item_info[num].freq += 1
-                if item_info[num].idx >= 0:
-                    fixup(heap, item_info[num].idx)
-                else:
-                    try_insert = True
-            if try_insert:
-                smallest_idx = smallest_size - 1
-                for i in range(smallest_size, len(heap)):
-                    if not cmp(heap[i], heap[smallest_idx]):
-                        smallest_idx = i
-                if cmp(num, heap[smallest_idx]):
-                    item_info[heap[smallest_idx]].idx = -1
-                    heap[smallest_idx] = num
-                    item_info[heap[smallest_idx]].idx = smallest_idx
-                    fixup(heap, smallest_idx)
-
-        def fixdown(heap: 'list[int]'):
-            i = 0
+        def fixdown(i: int):
             while ...:
                 l = i * 2 + 1
                 if l >= len(heap):
@@ -62,20 +33,37 @@ class Solution:
                 if r < len(heap) and cmp(heap[r], heap[l]):
                     l = r
                 # now [l] is the "smaller" child
-                if not cmp(heap[i], heap[l]):
+                if cmp(heap[l], heap[i]):
+                    item_info[heap[i]].idx, item_info[heap[l]].idx = l, i
                     heap[i], heap[l] = heap[l], heap[i]
                     i = l
                 else:
                     break
 
-        sorted_arr: list[int] = []
-        for _ in range(len(heap)):
-            sorted_arr.append(heap[0])
-            heap[0] = heap[-1]
-            del heap[-1]
-            fixdown(heap)
+        for num in nums:
+            try_insert = False
+            if num not in item_info:
+                item_info[num] = ItemInfo(1)
+                if len(heap) < k:
+                    item_info[num].idx = len(heap)
+                    heap.append(num)
+                    fixup(len(heap) - 1)
+                else:
+                    try_insert = True
+            else:
+                item_info[num].freq += 1
+                if item_info[num].idx >= 0:
+                    fixdown(item_info[num].idx)
+                else:
+                    try_insert = True
+            if try_insert:
+                if cmp(heap[0], num):
+                    item_info[heap[0]].idx = -1
+                    heap[0] = num
+                    item_info[heap[0]].idx = 0
+                    fixdown(0)
 
-        return sorted_arr
+        return heap
 
 
 def test_1():
